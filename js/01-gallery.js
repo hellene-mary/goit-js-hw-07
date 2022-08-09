@@ -1,9 +1,9 @@
-import { galleryItems } from "./gallery-items.js";
+import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
 console.log(galleryItems);
 
-const galleryEl = document.querySelector(".gallery");
+const galleryEl = document.querySelector('.gallery');
 
 function createGalleryItem(galleryItem) {
     const { preview, original, description } = galleryItem;
@@ -20,18 +20,31 @@ function createGalleryItem(galleryItem) {
 </div>`;
 }
 
-const createGalleryItems = galleryItems.map(createGalleryItem).join("");
+const createGalleryItems = galleryItems.map(createGalleryItem).join('');
 
-galleryEl.insertAdjacentHTML("beforeend", createGalleryItems);
+galleryEl.insertAdjacentHTML('beforeend', createGalleryItems);
 
-function callModalWithLargeImage(event) {
+function onGalleryImageClick(event) {
     event.preventDefault();
+
     const sourseImage = event.target.dataset.source;
-    console.log('~ sourseImage', sourseImage)
-    return basicLightbox.create(`
-<img src='${sourseImage}' width="800" height="600">
-`).show()
+    const instance = basicLightbox
+        .create(`<img src='${sourseImage}' width="800" height="600">`);
+    
+    instance.show();
+    
+    window.addEventListener('keydown', onEscPress);
+
+    function onEscPress(event) {
+        // console.log(event.code);
+        if (event.code === 'Escape') {
+            instance.close();
+            window.removeEventListener('keydown', onEscPress);
+        }
+    }
 }
 
-galleryEl.addEventListener("click", callModalWithLargeImage);
+galleryEl.addEventListener('click', onGalleryImageClick);
+
+
 
