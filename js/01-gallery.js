@@ -32,11 +32,10 @@ function onGalleryImageClick(event) {
         .create(`<img src='${sourseImage}' width="800" height="600">`);
     
     instance.show();
-    
+
     window.addEventListener('keydown', onEscPress);
 
     function onEscPress(event) {
-        // console.log(event.code);
         if (event.code === 'Escape') {
             instance.close();
             window.removeEventListener('keydown', onEscPress);
